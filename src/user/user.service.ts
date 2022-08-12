@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { genSalt, hash } from 'bcryptjs';
+import { MovieEntity } from 'src/movie/movie.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './user.dto';
 import { UserEntity } from './user.entity';
@@ -14,6 +15,8 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
+    @InjectRepository(MovieEntity)
+    private readonly movieRepository: Repository<MovieEntity>,
   ) {}
 
   async byId(id: number) {
@@ -22,7 +25,7 @@ export class UserService {
         id,
       },
       relations: {
-        videos: true,
+        likedMovies: true,
       },
       order: {
         createdAt: 'DESC',
@@ -59,5 +62,33 @@ export class UserService {
 
   async getAll() {
     return this.userRepository.find();
+  }
+
+  async addLikedMovie(id: number, movieId: number) {
+    const user = await this.byId(id);
+    const movie = await this.movieRepository.findOneBy({ id: movieId });
+
+    if (!movie) throw new NotFoundException('Movie is not found');
+
+    user.likedMovies.push(movie);
+
+    return await this.userRepository.save(user);
+  }
+
+  async deleteLikedMovie(id: number, movieId: number) {
+    const user = await this.byId(id);
+
+    const movieToRemove = user.likedMovies.findIndex((object) => {
+      return object.id === movieId;
+    });
+
+    if (movieToRemove == -1)
+      throw new NotFoundException(
+        'Movie is not found. Nothing have been deleted',
+      );
+
+    user.likedMovies.splice(movieToRemove, 1);
+
+    return await this.userRepository.save(user);
   }
 }

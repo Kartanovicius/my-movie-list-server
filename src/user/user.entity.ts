@@ -1,6 +1,6 @@
 import { Base } from 'src/utils/base';
-import { VideoEntity } from 'src/video/video.entity';
-import { Column, Entity, OneToMany } from 'typeorm';
+import { MovieEntity } from 'src/movie/movie.entity';
+import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity('User')
 export class UserEntity extends Base {
@@ -22,6 +22,7 @@ export class UserEntity extends Base {
   @Column({ default: '', name: 'avatar_path' })
   avatarPath: string;
 
-  @OneToMany(() => VideoEntity, (video) => video.user)
-  videos: VideoEntity[];
+  @ManyToMany(() => MovieEntity, (movie) => movie.users)
+  @JoinTable({ name: 'liked_movie_id' })
+  likedMovies: MovieEntity[];
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -40,5 +41,25 @@ export class UserController {
   @Get('')
   async getUsers() {
     return this.userService.getAll();
+  }
+
+  @HttpCode(200)
+  @Put('liked-movie/:id')
+  @Auth()
+  async addLikedMovie(
+    @CurrentUser('id') id: number,
+    @Param('id') movieId: string,
+  ) {
+    return this.userService.addLikedMovie(id, +movieId);
+  }
+
+  @HttpCode(200)
+  @Delete('liked-movie/:id')
+  @Auth()
+  async deleteLikedMovie(
+    @CurrentUser('id') id: number,
+    @Param('id') movieId: string,
+  ) {
+    return this.userService.deleteLikedMovie(id, +movieId);
   }
 }
