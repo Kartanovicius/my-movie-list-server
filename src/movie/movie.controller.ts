@@ -18,6 +18,7 @@ import { MovieService } from './movie.service';
 export class MovieController {
   constructor(private readonly movieService: MovieService) {}
 
+  /* Get */
   @Get()
   async getMovies() {
     return this.movieService.getAll();
@@ -37,14 +38,18 @@ export class MovieController {
   async getMovie(@Param('id') id: string) {
     return this.movieService.byId(+id);
   }
+  /* End Get */
 
+  /* Post */
   @HttpCode(200)
   @Post()
   @Auth()
   async createMovie() {
     return this.movieService.create();
   }
+  /* End Post */
 
+  /* Put */
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
   @Put(':id')
@@ -55,16 +60,19 @@ export class MovieController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
+  @Put('update-views/:id')
+  async updateViews(@Param('id') id: string) {
+    return this.movieService.updateCountViews(+id);
+  }
+  /* End Put */
+
+  /* Delete */
+  @UsePipes(new ValidationPipe())
+  @HttpCode(200)
   @Delete(':id')
   @Auth()
   async deleteMovie(@Param('id') id: string) {
     return this.movieService.delete(+id);
   }
-
-  @UsePipes(new ValidationPipe())
-  @HttpCode(200)
-  @Put('update-views/:id')
-  async updateViews(@Param('id') id: string) {
-    return this.movieService.updateCountViews(+id);
-  }
+  /* End Delete */
 }

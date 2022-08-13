@@ -8,7 +8,7 @@ export class MovieDto {
   description: string;
 
   @IsString()
-  moviePath: string;
+  trailerPath: string;
 
   @IsString()
   posterPath: string;

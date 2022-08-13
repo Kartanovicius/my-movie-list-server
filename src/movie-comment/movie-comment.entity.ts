@@ -1,10 +1,10 @@
+import { MovieEntity } from 'src/movie/movie.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Base } from 'src/utils/base';
-import { MovieEntity } from 'src/movie/movie.entity';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
-@Entity('Comment')
-export class CommentEntity extends Base {
+@Entity('MovieComment')
+export class MovieCommentEntity extends Base {
   @Column({ default: '', type: 'text' })
   message: string;
 

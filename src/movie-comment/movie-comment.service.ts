@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CommentDto } from './comment.dto';
-import { CommentEntity } from './comment.entity';
+import { MovieCommentDto } from './movie-comment.dto';
+import { MovieCommentEntity } from './movie-comment.entity';
 
 @Injectable()
-export class CommentService {
+export class MovieCommentService {
   constructor(
-    @InjectRepository(CommentEntity)
-    private readonly commentRepository: Repository<CommentEntity>,
+    @InjectRepository(MovieCommentEntity)
+    private readonly commentRepository: Repository<MovieCommentEntity>,
   ) {}
 
-  async create(userId: number, dto: CommentDto) {
+  async create(userId: number, dto: MovieCommentDto) {
     const newComment = this.commentRepository.create({
       message: dto.message,
       movie: { id: dto.movieId },
