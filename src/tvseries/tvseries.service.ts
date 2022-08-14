@@ -102,10 +102,10 @@ export class TvseriesService {
   async getHighestRatedTvSeries() {
     return this.tvseriesRepository.find({
       where: {
-        raiting: MoreThan(0),
+        rating: MoreThan(0),
       },
       order: {
-        raiting: 'DESC',
+        rating: 'DESC',
       },
     });
   }

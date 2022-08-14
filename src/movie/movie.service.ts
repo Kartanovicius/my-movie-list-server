@@ -102,10 +102,10 @@ export class MovieService {
   async getHighestRatedMovie() {
     return this.movieRepository.find({
       where: {
-        raiting: MoreThan(0),
+        rating: MoreThan(0),
       },
       order: {
-        raiting: 'DESC',
+        rating: 'DESC',
       },
     });
   }

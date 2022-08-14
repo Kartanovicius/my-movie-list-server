@@ -9,7 +9,7 @@ export abstract class Show extends Base {
   views?: number;
 
   @Column({ default: 0, type: 'float' })
-  raiting?: number;
+  rating?: number;
 
   @Column({ default: 0 })
   duration?: number;
