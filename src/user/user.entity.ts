@@ -14,9 +14,6 @@ export class UserEntity extends Base {
   @Column({ default: '' })
   name: string;
 
-  @Column({ default: 0, name: 'watched_count' })
-  watchedCount?: number;
-
   @Column({ default: '', type: 'text' })
   description: string;
 
