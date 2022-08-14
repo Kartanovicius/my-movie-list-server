@@ -1,5 +1,6 @@
-import { Base } from 'src/utils/base';
 import { MovieEntity } from 'src/movie/movie.entity';
+import { TvSeriesEntity } from 'src/tvseries/tvseries.entity';
+import { Base } from 'src/utils/base';
 import { Column, Entity, JoinTable, ManyToMany } from 'typeorm';
 
 @Entity('User')
@@ -25,4 +26,8 @@ export class UserEntity extends Base {
   @ManyToMany(() => MovieEntity, (movie) => movie.users)
   @JoinTable({ name: 'liked_movie_id' })
   likedMovies: MovieEntity[];
+
+  @ManyToMany(() => TvSeriesEntity, (tvseries) => tvseries.users)
+  @JoinTable({ name: 'liked_tvseries_id' })
+  likedTvSeries: TvSeriesEntity[];
 }

@@ -8,8 +8,9 @@ import { getTypeOrmConfig } from './config/typeorm.config';
 import { MediaModule } from './media/media.module';
 import { MovieCommentModule } from './movie-comment/movie-comment.module';
 import { MovieModule } from './movie/movie.module';
-import { UserModule } from './user/user.module';
+import { TvSeriesCommentModule } from './tvseries-comment/tvseries-comment.module';
 import { TvseriesModule } from './tvseries/tvseries.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { TvseriesModule } from './tvseries/tvseries.module';
     AuthModule,
     MediaModule,
     TvseriesModule,
+    TvSeriesCommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
