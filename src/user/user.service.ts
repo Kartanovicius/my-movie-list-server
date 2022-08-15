@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { genSalt, hash } from 'bcryptjs';
-import { MovieEntity } from 'src/movie/movie.entity';
+import { ShowEntity } from 'src/show/show.entity';
 import { Repository } from 'typeorm';
 import { UserDto } from './user.dto';
 import { UserEntity } from './user.entity';
@@ -15,8 +15,8 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-    @InjectRepository(MovieEntity)
-    private readonly movieRepository: Repository<MovieEntity>,
+    @InjectRepository(ShowEntity)
+    private readonly showRepository: Repository<ShowEntity>,
   ) {}
 
   async byId(id: number) {
@@ -25,7 +25,7 @@ export class UserService {
         id,
       },
       relations: {
-        likedMovies: true,
+        likedShows: true,
       },
       order: {
         createdAt: 'DESC',
@@ -64,30 +64,30 @@ export class UserService {
     return this.userRepository.find();
   }
 
-  async addLikedMovie(id: number, movieId: number) {
+  async addLikedShow(id: number, showId: number) {
     const user = await this.byId(id);
-    const movie = await this.movieRepository.findOneBy({ id: movieId });
+    const show = await this.showRepository.findOneBy({ id: showId });
 
-    if (!movie) throw new NotFoundException('Movie is not found');
+    if (!show) throw new NotFoundException('Show is not found');
 
-    user.likedMovies.push(movie);
+    user.likedShows.push(show);
 
     return await this.userRepository.save(user);
   }
 
-  async deleteLikedMovie(id: number, movieId: number) {
+  async deleteLikedShow(id: number, showId: number) {
     const user = await this.byId(id);
 
-    const movieToRemove = user.likedMovies.findIndex((object) => {
-      return object.id === movieId;
+    const showToRemove = user.likedShows.findIndex((object) => {
+      return object.id === showId;
     });
 
-    if (movieToRemove == -1)
+    if (showToRemove == -1)
       throw new NotFoundException(
-        'Movie is not found. Nothing have been deleted',
+        'Show is not found. Nothing have been deleted',
       );
 
-    user.likedMovies.splice(movieToRemove, 1);
+    user.likedShows.splice(showToRemove, 1);
 
     return await this.userRepository.save(user);
   }

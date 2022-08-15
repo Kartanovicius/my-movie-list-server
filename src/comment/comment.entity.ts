@@ -1,10 +1,10 @@
-import { TvSeriesEntity } from 'src/tvseries/tvseries.entity';
+import { ShowEntity } from 'src/show/show.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Base } from 'src/utils/base';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
-@Entity('TvSeriesComment')
-export class TvSeriesCommentEntity extends Base {
+@Entity('Comment')
+export class CommentEntity extends Base {
   @Column({ default: '', type: 'text' })
   message: string;
 
@@ -12,7 +12,7 @@ export class TvSeriesCommentEntity extends Base {
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
-  @ManyToOne(() => TvSeriesEntity, (tvseries) => tvseries.comments)
-  @JoinColumn({ name: 'tvseries_id' })
-  tvseries: TvSeriesEntity;
+  @ManyToOne(() => ShowEntity, (show) => show.comments)
+  @JoinColumn({ name: 'show_id' })
+  show: ShowEntity;
 }

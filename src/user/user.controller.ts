@@ -44,22 +44,22 @@ export class UserController {
   }
 
   @HttpCode(200)
-  @Put('liked-movie/:id')
+  @Put('liked-show/:id')
   @Auth()
-  async addLikedMovie(
+  async addLikedShow(
     @CurrentUser('id') id: number,
-    @Param('id') movieId: string,
+    @Param('id') showId: string,
   ) {
-    return this.userService.addLikedMovie(id, +movieId);
+    return this.userService.addLikedShow(id, +showId);
   }
 
   @HttpCode(200)
-  @Delete('liked-movie/:id')
+  @Delete('liked-show/:id')
   @Auth()
-  async deleteLikedMovie(
+  async deleteLikedShow(
     @CurrentUser('id') id: number,
-    @Param('id') movieId: string,
+    @Param('id') showId: string,
   ) {
-    return this.userService.deleteLikedMovie(id, +movieId);
+    return this.userService.deleteLikedShow(id, +showId);
   }
 }

@@ -4,11 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { CommentModule } from './comment/comment.module';
 import { getTypeOrmConfig } from './config/typeorm.config';
 import { MediaModule } from './media/media.module';
-import { MovieCommentModule } from './movie-comment/movie-comment.module';
 import { MovieModule } from './movie/movie.module';
-import { TvSeriesCommentModule } from './tvseries-comment/tvseries-comment.module';
+import { ShowModule } from './show/show.module';
 import { TvseriesModule } from './tvseries/tvseries.module';
 import { UserModule } from './user/user.module';
 
@@ -21,12 +21,12 @@ import { UserModule } from './user/user.module';
       useFactory: getTypeOrmConfig,
     }),
     UserModule,
-    MovieModule,
-    MovieCommentModule,
     AuthModule,
     MediaModule,
+    ShowModule,
+    CommentModule,
+    MovieModule,
     TvseriesModule,
-    TvSeriesCommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -26,12 +26,12 @@ export class MovieController {
 
   @Get('most-viewed')
   async getMostViewed() {
-    return this.movieService.getMostViewedMovie();
+    return this.movieService.getMostViewedShow();
   }
 
   @Get('highest-rated')
   async getHighestRated() {
-    return this.movieService.getHighestRatedMovie();
+    return this.movieService.getHighestRatedShow();
   }
 
   @Get(':id')

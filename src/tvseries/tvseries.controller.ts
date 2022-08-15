@@ -17,8 +17,8 @@ import { TvseriesService } from './tvseries.service';
 @Controller('tvseries')
 export class TvseriesController {
   constructor(private readonly tvseriesService: TvseriesService) {}
-  /* Get */
 
+  /* Get */
   @Get()
   async getTvSeries() {
     return this.tvseriesService.getAll();
