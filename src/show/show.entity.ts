@@ -28,6 +28,19 @@ export class ShowEntity extends Base {
   @Column({ default: '', type: 'text' })
   description: string;
 
+  @Column({ default: '', type: 'text' })
+  genre: Array<
+    | 'comedy'
+    | 'fantasy'
+    | 'drama'
+    | 'history'
+    | 'horror'
+    | 'adventure'
+    | 'action'
+    | 'noir'
+    | 'thriller'
+  >;
+
   @Column({ default: '', name: 'poster_path' })
   posterPath: string;
 
