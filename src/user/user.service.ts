@@ -72,7 +72,7 @@ export class UserService {
 
     if (!show) throw new NotFoundException('Show is not found');
 
-    user.likedShows.push(show);
+    if (!!~user.likedShows.indexOf(show)) user.likedShows.push(show);
 
     return await this.userRepository.save(user);
   }
