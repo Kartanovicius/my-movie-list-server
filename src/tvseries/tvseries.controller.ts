@@ -26,12 +26,12 @@ export class TvseriesController {
 
   @Get('most-viewed')
   async getMostViewed() {
-    return this.tvseriesService.getMostViewedTvSeries();
+    return this.tvseriesService.getMostViewedShow();
   }
 
   @Get('highest-rated')
   async getHighestRated() {
-    return this.tvseriesService.getHighestRatedTvSeries();
+    return this.tvseriesService.getHighestRatedShow();
   }
 
   @Get(':id')
