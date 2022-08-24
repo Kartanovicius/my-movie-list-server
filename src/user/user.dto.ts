@@ -10,8 +10,5 @@ export class UserDto {
   name: string;
 
   @IsString()
-  description: string;
-
-  @IsString()
   avatarPath: string;
 }

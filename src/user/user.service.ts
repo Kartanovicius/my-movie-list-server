@@ -54,7 +54,6 @@ export class UserService {
 
     user.email = dto.email;
     user.name = dto.name;
-    user.description = dto.description;
     user.avatarPath = dto.avatarPath;
 
     return this.userRepository.save(user);

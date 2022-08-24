@@ -14,7 +14,7 @@ export class UserEntity extends Base {
   name: string;
 
   @Column({ default: '', type: 'text' })
-  description: string;
+  role: 'admin' | 'user';
 
   @Column({ default: '', name: 'avatar_path' })
   avatarPath: string;
