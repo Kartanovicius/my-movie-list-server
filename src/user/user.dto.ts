@@ -8,7 +8,4 @@ export class UserDto {
 
   @IsString()
   name: string;
-
-  @IsString()
-  avatarPath: string;
 }

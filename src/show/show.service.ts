@@ -25,7 +25,7 @@ export class ShowService {
         users: {
           id: true,
           name: true,
-          avatarPath: true,
+          avatarId: true,
         },
         comments: {
           id: true,
@@ -33,7 +33,7 @@ export class ShowService {
           user: {
             id: true,
             name: true,
-            avatarPath: true,
+            avatarId: true,
           },
         },
       },
@@ -66,7 +66,7 @@ export class ShowService {
         users: {
           id: true,
           name: true,
-          avatarPath: true,
+          avatarId: true,
         },
         comments: {
           id: true,
@@ -74,7 +74,7 @@ export class ShowService {
           user: {
             id: true,
             name: true,
-            avatarPath: true,
+            avatarId: true,
           },
         },
       },

@@ -26,7 +26,7 @@ export class TvseriesService {
         users: {
           id: true,
           name: true,
-          avatarPath: true,
+          avatarId: true,
         },
         comments: {
           id: true,
@@ -34,7 +34,7 @@ export class TvseriesService {
           user: {
             id: true,
             name: true,
-            avatarPath: true,
+            avatarId: true,
           },
         },
       },
@@ -73,7 +73,7 @@ export class TvseriesService {
         users: {
           id: true,
           name: true,
-          avatarPath: true,
+          avatarId: true,
         },
         comments: {
           id: true,
@@ -81,7 +81,7 @@ export class TvseriesService {
           user: {
             id: true,
             name: true,
-            avatarPath: true,
+            avatarId: true,
           },
         },
       },

@@ -1,22 +1,26 @@
 import {
   BadRequestException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { genSalt, hash } from 'bcryptjs';
 import { ShowEntity } from 'src/show/show.entity';
-import { Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
+import { DatabaseFilesService } from '../database-files/database-files.service';
 import { UserDto } from './user.dto';
 import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
+    private readonly databaseFilesService: DatabaseFilesService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
     @InjectRepository(ShowEntity)
     private readonly showRepository: Repository<ShowEntity>,
+    private connection: Connection,
   ) {}
 
   async byId(id: number) {
@@ -54,7 +58,6 @@ export class UserService {
 
     user.email = dto.email;
     user.name = dto.name;
-    user.avatarPath = dto.avatarPath;
 
     return this.userRepository.save(user);
   }
@@ -89,5 +92,45 @@ export class UserService {
     user.likedShows.splice(showToRemove, 1);
 
     return await this.userRepository.save(user);
+  }
+
+  async addAvatar(userId: number, imageBuffer: Buffer) {
+    const queryRunner = this.connection.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const user = await queryRunner.manager.findOne(UserEntity, {
+        where: { id: userId },
+      });
+      const currentAvatarId = user.avatarId;
+      const avatar =
+        await this.databaseFilesService.uploadDatabaseFileWithQueryRunner(
+          imageBuffer,
+          String(userId),
+          queryRunner,
+        );
+
+      await queryRunner.manager.update(UserEntity, userId, {
+        avatarId: avatar.id,
+      });
+
+      if (currentAvatarId) {
+        await this.databaseFilesService.deleteFileWithQueryRunner(
+          currentAvatarId,
+          queryRunner,
+        );
+      }
+
+      await queryRunner.commitTransaction();
+
+      return avatar;
+    } catch {
+      await queryRunner.rollbackTransaction();
+      throw new InternalServerErrorException();
+    } finally {
+      await queryRunner.release();
+    }
   }
 }

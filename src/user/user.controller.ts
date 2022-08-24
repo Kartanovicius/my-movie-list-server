@@ -5,10 +5,14 @@ import {
   Get,
   HttpCode,
   Param,
+  Post,
   Put,
+  UploadedFile,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { CurrentUser } from './user.decorator';
 import { UserDto } from './user.dto';
@@ -60,5 +64,15 @@ export class UserController {
     @Param('id') showId: string,
   ) {
     return this.userService.deleteLikedShow(id, +showId);
+  }
+
+  @Post('avatar')
+  @Auth()
+  @UseInterceptors(FileInterceptor('file'))
+  async addAvatar(
+    @CurrentUser('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.userService.addAvatar(+id, file.buffer);
   }
 }
