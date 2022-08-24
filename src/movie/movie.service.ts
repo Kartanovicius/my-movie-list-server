@@ -8,11 +8,10 @@ import { MovieEntity } from './movie.entity';
 @Injectable()
 export class MovieService extends ShowService {
   constructor(
-    props,
     @InjectRepository(MovieEntity)
     private readonly movieRepository: Repository<MovieEntity>,
   ) {
-    super(props);
+    super(movieRepository);
   }
 
   async update(id: number, dto: MovieDto) {
