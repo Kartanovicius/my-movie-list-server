@@ -1,0 +1,30 @@
+_id: req_wrk_0152e4fc32024143a169cc00e5a7b2d1f1375a25
+type: Request
+parentId: fld_wrk_0152e4fc32024143a169cc00e5a7b2d166a36e77
+modified: 1661422275374
+created: 1661422201212
+url: "{{ base_url }}/auth/register"
+name: Registrate New User
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "email": "string",
+      "password": "string"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_67d634efd6da481193199fe03b9dc8bc
+authentication: {}
+metaSortKey: -1661422201212
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
