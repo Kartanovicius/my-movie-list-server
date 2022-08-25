@@ -3,15 +3,16 @@ import {
   Injectable,
   InternalServerErrorException,
   NotFoundException,
+  UnsupportedMediaTypeException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { genSalt, hash } from 'bcryptjs';
+import * as sharp from 'sharp';
 import { ShowEntity } from 'src/show/show.entity';
 import { Connection, Repository } from 'typeorm';
 import { DatabaseFilesService } from '../database-files/database-files.service';
 import { UserDto } from './user.dto';
 import { UserEntity } from './user.entity';
-
 @Injectable()
 export class UserService {
   constructor(
@@ -95,6 +96,16 @@ export class UserService {
   }
 
   async addAvatar(userId: number, imageBuffer: Buffer) {
+    await sharp(imageBuffer)
+      .resize(200, 200)
+      .toBuffer()
+      .then(function (outputBuffer) {
+        imageBuffer = outputBuffer;
+      })
+      .catch((err) => {
+        throw new UnsupportedMediaTypeException(err);
+      });
+
     const queryRunner = this.connection.createQueryRunner();
 
     await queryRunner.connect();
@@ -108,7 +119,7 @@ export class UserService {
       const avatar =
         await this.databaseFilesService.uploadDatabaseFileWithQueryRunner(
           imageBuffer,
-          String(userId),
+          `avatar-${String(userId)}.jpg`,
           queryRunner,
         );
 
