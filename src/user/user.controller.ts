@@ -47,7 +47,7 @@ export class UserController {
   }
 
   @HttpCode(200)
-  @Put('liked-show/:id')
+  @Put('liked-show/add/:id')
   @Auth()
   async addLikedShow(
     @CurrentUser('id') id: number,
@@ -57,7 +57,7 @@ export class UserController {
   }
 
   @HttpCode(200)
-  @Delete('liked-show/:id')
+  @Delete('liked-show/remove/:id')
   @Auth()
   async deleteLikedShow(
     @CurrentUser('id') id: number,
