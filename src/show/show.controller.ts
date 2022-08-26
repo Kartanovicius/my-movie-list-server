@@ -53,7 +53,7 @@ export class ShowController {
   /* Put */
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Put(':id')
+  @Put('update/:id')
   @Auth()
   async updateShow(@Param('id') id: string, @Body() dto: ShowDto) {
     return this.showService.update(+id, dto);
