@@ -1,0 +1,314 @@
+_id: spc_07d1dd0333d741b3b3022924a0232294
+type: ApiSpec
+parentId: wrk_0152e4fc32024143a169cc00e5a7b2d1
+modified: 1661449693058
+created: 1659977879408
+fileName: My-Movie-List
+contents: >-
+  openapi: 3.0.0
+
+  info:
+    description: "Alpha 0.0.1"
+    version: 0.0.1
+    title: my-movie-list
+  tags:
+    - name: auth
+      description: Authorization API for User Login and Registrate
+    - name: user
+      description: Operations about user
+    - name: show
+      description: Access and Modifi Movies and TV Series
+    - name: movie
+      description: Access and Modifi Movies
+    - name: tvseries
+      description: Access and Modifi TV Series
+  paths:
+    /auth/register:
+      post:
+        tags:
+          - auth
+        summary: Registrate New User
+        description: ""
+        operationId: addUser
+        requestBody:
+          $ref: '#/components/requestBodies/Auth'
+        responses:
+          "400":
+            description: "email must be an email\n\npassword must be a string\n\nPasswords should contain no less than 6 symbols!"
+    /auth/login:
+      post:
+        tags:
+          - auth
+        summary: Login User
+        description: ""
+        operationId: loginUser
+        requestBody:
+          $ref: '#/components/requestBodies/Auth'
+        responses:
+          "400":
+            description: "email must be an email\n\npassword must be a string\n\nPasswords should contain no less than 6 symbols!"
+          "401": 
+            description: "Wrong password"
+          "404": 
+            description: "User not found"
+    /user:
+      get:
+        tags:
+          - user
+        summary: Get all Existing Users
+        description: ""
+        operationId: getUsers
+        responses:
+          "400":
+            description: "email must be an email\n\npassword must be a string\n\nPasswords should contain no less than 6 symbols!"
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+    /user/profile:
+      get:
+        tags:
+          - user
+        summary: Get Current Authorized User
+        description: ""
+        operationId: getUser
+        security:
+          - bearerAuth: []
+        responses:
+          "401":
+            $ref: "#/components/responses/UnauthorizedError"
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+    /user/by-id/{userId}:
+      get:
+        tags:
+          - user
+        summary: Get User by ID
+        description: ""
+        operationId: getUserById
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: userId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the user to get
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          "401":
+            $ref: "#/components/responses/UnauthorizedError"
+    /user/{userId}:
+      put:
+        tags:
+          - user
+        summary: Update User Data
+        description: ""
+        operationId: updateUserById
+        requestBody:
+          $ref: '#/components/requestBodies/User'
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: userId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the user to update
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          "401":
+            $ref: "#/components/responses/UnauthorizedError"
+    /user/liked-show/add/{showId}:
+      put:
+        tags:
+          - user
+        summary: Add Liked Show to User
+        description: ""
+        operationId: putNewLikedShowToUser
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: showId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the user to put show
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          "401":
+            $ref: "#/components/responses/UnauthorizedError"
+          "404":
+            description: Show not found
+    /user/liked-show/remove/{showId}:
+      delete:
+        tags:
+          - user
+        summary: Remove show from likedShows user
+        description: ""
+        operationId: removeLikedShowUser
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: showId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the user to remove show
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          "401":
+            $ref: "#/components/responses/UnauthorizedError"
+          "404":
+            description: Show is not found. Nothing have been
+  servers:
+    - url: http://localhost:4200/api
+  components:
+    requestBodies:
+      Auth:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+                  minimum: 6
+        description: Email must be in email format and password must contain min 6 chars
+        required: true
+      User:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: The user name.
+                  uniqueItems: true
+                password:
+                  type: string
+                  description: The user password.
+                name:
+                  type: string
+                  description: The user name.
+              required:
+                - email
+                - name
+        description: User dto object
+    schemas:
+      Base:
+        type: object
+        properties: 
+          id:
+            type: integer
+            description: The user ID.
+          createdAt:
+            type: string
+            description: The user createdAt.
+          updatedAt:
+            type: string
+            description: The user updatedAt.
+      User:
+        allOf:
+        - $ref: "#/components/schemas/Base"
+        - type: object
+        properties:
+          email:
+            type: string
+            description: The user name.
+          password:
+            type: string
+            description: The user password.
+          name:
+            type: string
+            description: The user name.
+          role:
+            type: string
+            description: The user role.
+          avatarId:
+            type: integer
+            description: The user avatarId.
+          likedShows:
+            type: array
+            description: The user likedShows.
+            items:
+              $ref: "#/components/schemas/Show"
+        xml:
+          name: User
+      UserDto:
+        type: object
+        properties:
+          email:
+            type: string
+            description: The user name.
+          name:
+            type: string
+            description: The user name.
+        xml:
+          name: UserDto
+      Show:
+        allOf:
+        - $ref: "#/components/schemas/Base"
+        - type: object
+        properties:
+          name:
+            type: string
+            description: The show name.
+          views:
+            type: integer
+          rating:
+            type: integer
+          duration:
+            type: integer
+          description:
+            type: string
+          genre:
+            type: string
+          posterPath:
+            type: string
+          trailerPath:
+            type: string
+        xml:
+          name: Show
+    securitySchemes:
+      bearerAuth:            # arbitrary name for the security scheme
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+    responses:
+      UnauthorizedError:
+        description: Unauthorized
+contentType: yaml
