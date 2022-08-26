@@ -70,7 +70,7 @@ export class ShowController {
   /* Delete */
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
-  @Delete(':id')
+  @Delete('delete/:id')
   @Auth()
   async deleteShow(@Param('id') id: string) {
     return this.showService.delete(+id);
