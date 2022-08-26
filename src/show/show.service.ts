@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ShowEntity } from 'src/show/show.entity';
 import { FindOptionsWhereProperty, ILike, MoreThan, Repository } from 'typeorm';
+import { ShowDto } from './show.dto';
 
 @Injectable()
 export class ShowService {
@@ -107,5 +108,31 @@ export class ShowService {
     const show = await this.byId(id);
     show.views++;
     return this.showRepository.save(show);
+  }
+
+  async update(id: number, dto: ShowDto) {
+    const show = await this.byId(id);
+
+    if (!show) throw new NotFoundException('Show was not found');
+
+    return this.showRepository.save({ ...show, ...dto });
+  }
+
+  async create() {
+    const defaultValue = {
+      name: '',
+      description: '',
+      trailerPath: '',
+      posterPath: '',
+    };
+
+    const newMovie = this.showRepository.create(defaultValue);
+    const movie = await this.showRepository.save(newMovie);
+
+    return movie.id;
+  }
+
+  async delete(id: number) {
+    return this.showRepository.delete({ id });
   }
 }
