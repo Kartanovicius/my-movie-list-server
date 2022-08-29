@@ -104,6 +104,16 @@ export class ShowService {
     });
   }
 
+  async getLastAddedShow() {
+    const shows = await this.showRepository.find({
+      order: {
+        rating: 'DESC',
+      },
+    });
+
+    return shows[0];
+  }
+
   async updateCountViews(id: number) {
     const show = await this.byId(id);
     show.views++;

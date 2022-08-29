@@ -34,6 +34,11 @@ export class ShowController {
     return this.showService.getHighestRatedShow();
   }
 
+  @Get('last-added')
+  async getLastAdded() {
+    return this.showService.getLastAddedShow();
+  }
+
   @Get(':id')
   async getShowById(@Param('id') id: string) {
     return this.showService.byId(+id);
