@@ -1,4 +1,4 @@
-import { IsString } from 'class-validator';
+import { ArrayUnique, IsArray, IsIn, IsString } from 'class-validator';
 
 export class ShowDto {
   @IsString()
@@ -6,6 +6,24 @@ export class ShowDto {
 
   @IsString()
   description: string;
+
+  @IsArray()
+  @ArrayUnique()
+  @IsIn(
+    [
+      'comedy',
+      'fantasy',
+      'drama',
+      'history',
+      'horror',
+      'adventure',
+      'action',
+      'noir',
+      'thriller',
+    ],
+    { each: true },
+  )
+  genre: string[];
 
   @IsString()
   trailerPath: string;
