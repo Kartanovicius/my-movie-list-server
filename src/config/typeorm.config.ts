@@ -10,6 +10,7 @@ export const getTypeOrmConfig = async (
   database: configService.get('DATABASE'),
   username: configService.get('USERNAME'),
   password: configService.get('PASSWORD'),
+  ssl: true,
   autoLoadEntities: true,
   synchronize: true,
 });
