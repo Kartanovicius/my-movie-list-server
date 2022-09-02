@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "my-movie-list",
+  "builds": [
+    {
+      "src": "dist/apps/server/main.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/apps/server/main.js"
+    }
+  ]
+}
