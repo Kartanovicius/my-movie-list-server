@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ShowEntity } from 'src/show/show.entity';
-import { FindOptionsWhereProperty, ILike, MoreThan, Repository } from 'typeorm';
+import { FindOptionsWhereProperty, Like, MoreThan, Repository } from 'typeorm';
 import { ShowDto } from './show.dto';
 
 @Injectable()
@@ -47,13 +47,17 @@ export class ShowService {
 
   async getAll(searchTerm?: string) {
     let options: FindOptionsWhereProperty<ShowEntity> = {};
+    console.log(searchTerm);
 
     if (options)
       options = {
-        name: ILike(`%${searchTerm}%`),
+        name: Like(`%${searchTerm}%`),
       };
 
     return this.showRepository.find({
+      where: {
+        ...options,
+      },
       order: {
         createdAt: 'DESC',
       },
@@ -104,14 +108,15 @@ export class ShowService {
     });
   }
 
-  async getLastAddedShow() {
+  async getLastAddedShow(limit = 1) {
     const shows = await this.showRepository.find({
       order: {
         rating: 'DESC',
       },
+      take: limit,
     });
 
-    return shows[0];
+    return limit == 1 ? shows[0] : shows;
   }
 
   async updateCountViews(id: number) {

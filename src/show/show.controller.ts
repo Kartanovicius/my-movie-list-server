@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -20,8 +21,8 @@ export class ShowController {
 
   /* Get */
   @Get()
-  async getShows() {
-    return this.showService.getAll();
+  async getShows(@Query('name') name: string) {
+    return this.showService.getAll(name);
   }
 
   @Get('most-viewed')
@@ -39,7 +40,7 @@ export class ShowController {
     return this.showService.getLastAddedShow();
   }
 
-  @Get(':id')
+  @Get('by-id:id')
   async getShowById(@Param('id') id: string) {
     return this.showService.byId(+id);
   }
@@ -48,7 +49,7 @@ export class ShowController {
 
   /* Post */
   @HttpCode(200)
-  @Post()
+  @Post('create')
   @Auth()
   async createShow() {
     return this.showService.create();
