@@ -136,6 +136,7 @@ export class ShowService {
 
   async updateCountViews(id: number) {
     const show = await this.byId(id);
+    if (!show) throw new NotFoundException('Show was not found');
     show.views++;
     return this.showRepository.save(show);
   }
