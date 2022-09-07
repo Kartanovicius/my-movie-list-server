@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ShowEntity } from 'src/show/show.entity';
 import { FindOptionsWhereProperty, Like, MoreThan, Repository } from 'typeorm';
@@ -163,7 +167,10 @@ export class ShowService {
     return movie.id;
   }
 
-  async delete(id: number) {
+  async delete(id: number, userRole: string) {
+    if (userRole !== 'admin')
+      throw new ForbiddenException("Video can't be deleted by user");
+
     return this.showRepository.delete({ id });
   }
 }

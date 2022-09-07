@@ -12,6 +12,7 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Auth } from 'src/auth/decorators/auth.decorator';
+import { CurrentUser } from 'src/user/user.decorator';
 import { ShowDto } from './show.dto';
 import { ShowService } from './show.service';
 
@@ -86,8 +87,11 @@ export class ShowController {
   @HttpCode(200)
   @Delete('delete/:id')
   @Auth()
-  async deleteShow(@Param('id') id: string) {
-    return this.showService.delete(+id);
+  async deleteShow(
+    @Param('id') id: string,
+    @CurrentUser('role') userRole: string,
+  ) {
+    return this.showService.delete(+id, userRole);
   }
   /* End Delete */
 }
