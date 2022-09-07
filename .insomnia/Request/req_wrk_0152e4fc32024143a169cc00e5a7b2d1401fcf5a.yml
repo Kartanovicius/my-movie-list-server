@@ -1,0 +1,21 @@
+_id: req_wrk_0152e4fc32024143a169cc00e5a7b2d1401fcf5a
+type: Request
+parentId: fld_wrk_0152e4fc32024143a169cc00e5a7b2d19fb29051
+modified: 1662569458816
+created: 1662569458816
+url: "{{ base_url }}/show/update-views/{{ showId }}"
+name: Increment Views Count in Show
+description: ""
+method: PUT
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1662569458816
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

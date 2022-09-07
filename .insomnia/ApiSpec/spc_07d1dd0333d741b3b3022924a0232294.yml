@@ -1,7 +1,7 @@
 _id: spc_07d1dd0333d741b3b3022924a0232294
 type: ApiSpec
 parentId: wrk_0152e4fc32024143a169cc00e5a7b2d1
-modified: 1661449693058
+modified: 1662569458837
 created: 1659977879408
 fileName: My-Movie-List
 contents: >-
@@ -190,7 +190,235 @@ contents: >-
           "401":
             $ref: "#/components/responses/UnauthorizedError"
           "404":
-            description: Show is not found. Nothing have been
+            description: Show is not found. Nothing have been   
+    /show:
+      get:
+        tags:
+          - show
+        summary: Get all Shows
+        description: ""
+        operationId: getShows
+        parameters:
+          - in: query
+            name: name
+            schema:
+              type: string
+            description: Search Term for Name
+          - in: query
+            name: per-page
+            schema:
+              type: number
+              default: 25
+            description: How many shows to show per page
+          - in: query
+            name: page
+            schema:
+              type: number
+              default: 1
+            description: Which page to show
+          - in: query
+            name: order
+            schema:
+              type: string
+              default: 'DESC'
+            description: Order of shows returned
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+    /show/{showId}:
+      get:
+        tags:
+          - show
+        summary: Get Show By ID
+        description: ""
+        operationId: getShowById
+        parameters:
+          - in: path
+            name: showId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the user to update
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+    /show/most-viewed:
+      get:
+        tags:
+          - show
+        summary: Get Most Viewed Shows
+        description: ""
+        operationId: getMostViewedShows
+        parameters:
+          - in: query
+            name: name
+            schema:
+              type: string
+            description: Search Term for Name
+          - in: query
+            name: per-page
+            schema:
+              type: number
+              default: 25
+            description: How many shows to show per page
+          - in: query
+            name: page
+            schema:
+              type: number
+              default: 1
+            description: Which page to show
+          - in: query
+            name: order
+            schema:
+              type: string
+              default: 'DESC'
+            description: Order of shows returned
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+    /show/highest-rated:
+      get:
+        tags:
+          - show
+        summary: Get Highest Rated Shows
+        description: ""
+        operationId: getHighestRatedShows
+        parameters:
+          - in: query
+            name: name
+            schema:
+              type: string
+            description: Search Term for Name
+          - in: query
+            name: per-page
+            schema:
+              type: number
+              default: 25
+            description: How many shows to show per page
+          - in: query
+            name: page
+            schema:
+              type: number
+              default: 1
+            description: Which page to show
+          - in: query
+            name: order
+            schema:
+              type: string
+              default: 'DESC'
+            description: Order of shows returned
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+    /show/create:
+      post:
+        tags:
+          - show
+        summary: Create New Show
+        description: ""
+        operationId: createShow
+        security:
+          - bearerAuth: []
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+          '401':
+            $ref: "#/components/responses/UnauthorizedError"
+    /show/update/{showId}:
+      put:
+        tags:
+          - show
+        summary: Update Existing Show
+        description: ""
+        operationId: update existing Show
+        security:
+          - bearerAuth: []
+        requestBody:
+          $ref: '#/components/requestBodies/Show'
+        parameters:
+          - in: path
+            name: showId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the show to update
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+          '401':
+            $ref: "#/components/responses/UnauthorizedError"
+    /show/update-views/{showId}:
+      put:
+        tags:
+          - show
+        summary: Increment Views Count in Show
+        description: ""
+        operationId: incrementViewsInShow
+        parameters:
+          - in: path
+            name: showId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the show to update
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+          '404':
+            description: "Show was not found"
+    /show/delete/{showId}:
+      delete:
+        tags:
+          - show
+        summary: Delete Show by ID
+        description: ""
+        operationId: deleteShow
+        security:
+          - bearerAuth: []
+        parameters:
+          - in: path
+            name: showId
+            schema:
+              type: integer
+            required: true
+            description: Numeric ID of the show to delete
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Show'
+          '404':
+            description: "Show was not found"
   servers:
     - url: http://localhost:4200/api
   components:
@@ -228,6 +456,29 @@ contents: >-
                 - email
                 - name
         description: User dto object
+      Show:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                genre:
+                  type: array
+                trailerPath:
+                  type: string
+                posterPath:
+                  type: string
+              required:
+                - name
+                - description
+                - genre
+                - trailerPath
+                - posterPath
+        description: Show dto object
     schemas:
       Base:
         type: object
