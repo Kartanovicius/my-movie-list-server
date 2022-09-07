@@ -21,23 +21,31 @@ export class ShowController {
 
   /* Get */
   @Get()
-  async getShows(@Query('name') name: string) {
-    return this.showService.getAll(name);
+  async getShows(
+    @Query('name') name: string,
+    @Query('page') page: number,
+    @Query('per-page') perPage: number,
+    @Query('order') order?: 'DESC' | 'ASC',
+  ) {
+    return this.showService.getAll(name, perPage, page, order);
   }
 
   @Get('most-viewed')
-  async getMostViewed() {
-    return this.showService.getMostViewedShow();
+  async getMostViewed(
+    @Query('page') page?: number,
+    @Query('per-page') perPage?: number,
+    @Query('order') order?: 'DESC' | 'ASC',
+  ) {
+    return this.showService.getMostViewedShow(perPage, page, order);
   }
 
   @Get('highest-rated')
-  async getHighestRated() {
-    return this.showService.getHighestRatedShow();
-  }
-
-  @Get('last-added')
-  async getLastAdded() {
-    return this.showService.getLastAddedShow();
+  async getHighestRated(
+    @Query('page') page?: number,
+    @Query('per-page') perPage?: number,
+    @Query('order') order?: 'DESC' | 'ASC',
+  ) {
+    return this.showService.getHighestRatedShow(perPage, page, order);
   }
 
   @Get('by-id:id')

@@ -4,6 +4,8 @@ import { ShowEntity } from 'src/show/show.entity';
 import { FindOptionsWhereProperty, Like, MoreThan, Repository } from 'typeorm';
 import { ShowDto } from './show.dto';
 
+const defaultPage = 1,
+  defaultPerPage = 25;
 @Injectable()
 export class ShowService {
   constructor(
@@ -45,21 +47,27 @@ export class ShowService {
     return show;
   }
 
-  async getAll(searchTerm?: string) {
+  async getAll(
+    searchTerm?: string,
+    perPage = defaultPerPage,
+    page = defaultPage,
+    order: 'DESC' | 'ASC' = 'DESC',
+  ) {
     let options: FindOptionsWhereProperty<ShowEntity> = {};
-    console.log(searchTerm);
+    const skip = perPage * page - perPage;
 
-    if (options)
+    if (options && searchTerm) {
       options = {
         name: Like(`%${searchTerm}%`),
       };
+    }
 
     return this.showRepository.find({
       where: {
         ...options,
       },
       order: {
-        createdAt: 'DESC',
+        createdAt: order,
       },
       relations: {
         users: true,
@@ -83,40 +91,47 @@ export class ShowService {
           },
         },
       },
+      take: perPage,
+      skip,
     });
   }
 
-  async getMostViewedShow() {
+  async getMostViewedShow(
+    perPage = defaultPerPage,
+    page = defaultPage,
+    order: 'DESC' | 'ASC' = 'DESC',
+  ) {
+    const skip = perPage * page - perPage;
+
     return this.showRepository.find({
       where: {
         views: MoreThan(0),
       },
       order: {
-        views: -1,
+        views: order,
       },
+      take: perPage,
+      skip,
     });
   }
 
-  async getHighestRatedShow() {
+  async getHighestRatedShow(
+    perPage = defaultPerPage,
+    page = defaultPage,
+    order: 'DESC' | 'ASC' = 'DESC',
+  ) {
+    const skip = perPage * page - perPage;
+
     return this.showRepository.find({
       where: {
         rating: MoreThan(0),
       },
       order: {
-        rating: 'DESC',
+        rating: order,
       },
+      take: perPage,
+      skip,
     });
-  }
-
-  async getLastAddedShow(limit = 1) {
-    const shows = await this.showRepository.find({
-      order: {
-        rating: 'DESC',
-      },
-      take: limit,
-    });
-
-    return limit == 1 ? shows[0] : shows;
   }
 
   async updateCountViews(id: number) {
