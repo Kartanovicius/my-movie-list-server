@@ -1,0 +1,33 @@
+_id: req_wrk_0152e4fc32024143a169cc00e5a7b2d10858bf0b
+type: Request
+parentId: fld_wrk_0152e4fc32024143a169cc00e5a7b2d19fb29051
+modified: 1662569458823
+created: 1662569458823
+url: "{{ base_url }}/show"
+name: Get all Shows
+description: ""
+method: GET
+body: {}
+parameters:
+  - name: name
+    disabled: true
+    value: string
+  - name: per-page
+    disabled: true
+    value: "25"
+  - name: page
+    disabled: true
+    value: "1"
+  - name: order
+    disabled: true
+    value: DESC
+headers: []
+authentication: {}
+metaSortKey: -1662569458823
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

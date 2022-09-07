@@ -1,0 +1,24 @@
+_id: req_wrk_0152e4fc32024143a169cc00e5a7b2d1186ca7d0
+type: Request
+parentId: fld_wrk_0152e4fc32024143a169cc00e5a7b2d19fb29051
+modified: 1662569458815
+created: 1662569458815
+url: "{{ base_url }}/show/delete/{{ showId }}"
+name: Delete Show by ID
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{{bearerToken}}"
+  prefix: ""
+metaSortKey: -1662569458815
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

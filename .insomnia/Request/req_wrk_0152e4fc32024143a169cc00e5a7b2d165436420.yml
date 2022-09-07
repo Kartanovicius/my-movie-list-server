@@ -1,0 +1,37 @@
+_id: req_wrk_0152e4fc32024143a169cc00e5a7b2d165436420
+type: Request
+parentId: fld_wrk_0152e4fc32024143a169cc00e5a7b2d19fb29051
+modified: 1662569458817
+created: 1662569458817
+url: "{{ base_url }}/show/update/{{ showId }}"
+name: Update Existing Show
+description: ""
+method: PUT
+body:
+  mimeType: application/json
+  text: |-
+    {
+      "name": "string",
+      "description": "string",
+      "genre": [
+        null
+      ],
+      "trailerPath": "string",
+      "posterPath": "string"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  token: "{{bearerToken}}"
+  prefix: ""
+metaSortKey: -1662569458817
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

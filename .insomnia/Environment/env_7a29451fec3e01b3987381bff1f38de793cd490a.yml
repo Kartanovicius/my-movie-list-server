@@ -1,7 +1,7 @@
 _id: env_7a29451fec3e01b3987381bff1f38de793cd490a
 type: Environment
 parentId: wrk_0152e4fc32024143a169cc00e5a7b2d1
-modified: 1661449508612
+modified: 1662568475345
 created: 1659977879410
 name: Base Environment
 data:
@@ -9,7 +9,7 @@ data:
   scheme: http
   base_path: /api
   host: localhost:3000
-  TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYwNDIwMDI2LCJleHAiOjE2NjMwOTg0MjZ9.m7tKkCQ3JxueVHBEeG0wAAGOzs7CV0d3EA5MP2GwqRA
+  TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjYyNTY4NDYzLCJleHAiOjE2NjUyNDY4NjN9.uqFjAkPijo9vyfnhNVv6Ry2FzjrCeJa6n8qCIEYp8SU
 dataPropertyOrder:
   "&":
     - base_url
