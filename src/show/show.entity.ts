@@ -22,8 +22,8 @@ export class ShowEntity extends Base {
   @Column({ default: 0, type: 'float' })
   rating?: number;
 
-  @Column({ default: '', type: 'text' })
-  duration?: string;
+  @Column({ default: 0 })
+  duration?: number;
 
   @Column({ default: '', type: 'text' })
   description: string;
