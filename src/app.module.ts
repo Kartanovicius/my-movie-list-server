@@ -12,6 +12,7 @@ import { ShowModule } from './show/show.module';
 import { TvseriesModule } from './tvseries/tvseries.module';
 import { UserModule } from './user/user.module';
 import { DatabaseFilesModule } from './database-files/database-files.module';
+import { UserRatingModule } from './user-rating/user-rating.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { DatabaseFilesModule } from './database-files/database-files.module';
     MovieModule,
     TvseriesModule,
     DatabaseFilesModule,
+    UserRatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

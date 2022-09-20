@@ -1,4 +1,5 @@
 import { CommentEntity } from 'src/comment/comment.entity';
+import { UserRatingEntity } from 'src/user-rating/entities/user-rating.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { Base } from 'src/utils/base';
 import {
@@ -43,6 +44,10 @@ export class ShowEntity extends Base {
 
   @ManyToMany(() => UserEntity, (user) => user.likedShows)
   users: UserEntity[];
+
+  @OneToMany(() => UserRatingEntity, (rating) => rating.show)
+  @JoinColumn({ name: 'user_rating_id' })
+  userRating: UserRatingEntity[];
 
   @OneToMany(() => CommentEntity, (comment) => comment.show)
   @JoinColumn({ name: 'comment_id' })
