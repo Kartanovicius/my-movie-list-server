@@ -26,27 +26,30 @@ export class ShowController {
     @Query('name') name: string,
     @Query('page') page: number,
     @Query('per-page') perPage: number,
-    @Query('order') order?: 'DESC' | 'ASC',
+    @Query('order') order: 'DESC' | 'ASC',
+    @Query('genre') genre: string[],
   ) {
-    return this.showService.getAll(name, perPage, page, order);
+    return this.showService.getAll(name, perPage, page, order, genre);
   }
 
   @Get('most-viewed')
   async getMostViewed(
-    @Query('page') page?: number,
-    @Query('per-page') perPage?: number,
-    @Query('order') order?: 'DESC' | 'ASC',
+    @Query('page') page: number,
+    @Query('per-page') perPage: number,
+    @Query('order') order: 'DESC' | 'ASC',
+    @Query('genre') genre?: string[],
   ) {
-    return this.showService.getMostViewedShow(perPage, page, order);
+    return this.showService.getMostViewedShow(perPage, page, order, genre);
   }
 
   @Get('highest-rated')
   async getHighestRated(
-    @Query('page') page?: number,
-    @Query('per-page') perPage?: number,
-    @Query('order') order?: 'DESC' | 'ASC',
+    @Query('page') page: number,
+    @Query('per-page') perPage: number,
+    @Query('order') order: 'DESC' | 'ASC',
+    @Query('genre') genre?: string[],
   ) {
-    return this.showService.getHighestRatedShow(perPage, page, order);
+    return this.showService.getHighestRatedShow(perPage, page, order, genre);
   }
 
   @Get('by-id:id')

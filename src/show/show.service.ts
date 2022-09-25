@@ -5,7 +5,13 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ShowEntity } from 'src/show/show.entity';
-import { FindOptionsWhereProperty, Like, MoreThan, Repository } from 'typeorm';
+import {
+  ArrayContains,
+  FindOptionsWhereProperty,
+  ILike,
+  MoreThan,
+  Repository,
+} from 'typeorm';
 import { ShowDto } from './show.dto';
 
 const defaultPage = 1,
@@ -52,19 +58,18 @@ export class ShowService {
   }
 
   async getAll(
-    searchTerm?: string,
+    searchTerm = '',
     perPage = defaultPerPage,
     page = defaultPage,
     order: 'DESC' | 'ASC' = 'DESC',
+    genre: string[] = [],
   ) {
-    let options: FindOptionsWhereProperty<ShowEntity> = {};
-    const skip = perPage * page - perPage;
+    const options: FindOptionsWhereProperty<ShowEntity> = {
+      name: ILike(`%${searchTerm}%`),
+      genre: ArrayContains([...genre]),
+    };
 
-    if (options && searchTerm) {
-      options = {
-        name: Like(`%${searchTerm}%`),
-      };
-    }
+    const skip = perPage * page - perPage;
 
     return this.showRepository.find({
       where: {
@@ -104,18 +109,24 @@ export class ShowService {
     perPage = defaultPerPage,
     page = defaultPage,
     order: 'DESC' | 'ASC' = 'DESC',
+    genre: string[] = [],
   ) {
     const skip = perPage * page - perPage;
+
+    const options = {
+      take: perPage,
+      skip,
+    };
 
     return this.showRepository.find({
       where: {
         views: MoreThan(0),
+        genre: ArrayContains([...genre]),
       },
       order: {
         views: order,
       },
-      take: perPage,
-      skip,
+      ...options,
     });
   }
 
@@ -123,12 +134,14 @@ export class ShowService {
     perPage = defaultPerPage,
     page = defaultPage,
     order: 'DESC' | 'ASC' = 'DESC',
+    genre: string[] = [],
   ) {
     const skip = perPage * page - perPage;
 
     return this.showRepository.find({
       where: {
         rating: MoreThan(0),
+        genre: ArrayContains([...genre]),
       },
       order: {
         rating: order,
