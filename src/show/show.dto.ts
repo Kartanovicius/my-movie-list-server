@@ -23,7 +23,7 @@ export class ShowDto {
     ],
     { each: true },
   )
-  genre: string[];
+  genre: string[] | string;
 
   @IsString()
   trailerPath: string;

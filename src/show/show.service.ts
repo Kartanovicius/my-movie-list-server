@@ -62,8 +62,12 @@ export class ShowService {
     perPage = defaultPerPage,
     page = defaultPage,
     order: 'DESC' | 'ASC' = 'DESC',
-    genre: string[] = [],
+    genre: string[] | string = [],
   ) {
+    if (!Array.isArray(genre)) {
+      genre = genre.split(' ');
+    }
+
     const options: FindOptionsWhereProperty<ShowEntity> = {
       name: ILike(`%${searchTerm}%`),
       genre: ArrayContains([...genre]),
@@ -109,9 +113,13 @@ export class ShowService {
     perPage = defaultPerPage,
     page = defaultPage,
     order: 'DESC' | 'ASC' = 'DESC',
-    genre: string[] = [],
+    genre: string[] | string = [],
   ) {
     const skip = perPage * page - perPage;
+
+    if (!Array.isArray(genre)) {
+      genre = genre.split(' ');
+    }
 
     const options = {
       take: perPage,
@@ -134,9 +142,13 @@ export class ShowService {
     perPage = defaultPerPage,
     page = defaultPage,
     order: 'DESC' | 'ASC' = 'DESC',
-    genre: string[] = [],
+    genre: string[] | string = [],
   ) {
     const skip = perPage * page - perPage;
+
+    if (!Array.isArray(genre)) {
+      genre = genre.split(' ');
+    }
 
     return this.showRepository.find({
       where: {

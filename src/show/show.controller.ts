@@ -27,7 +27,7 @@ export class ShowController {
     @Query('page') page: number,
     @Query('per-page') perPage: number,
     @Query('order') order: 'DESC' | 'ASC',
-    @Query('genre') genre: string[],
+    @Query('genre') genre: string[] | string,
   ) {
     return this.showService.getAll(name, perPage, page, order, genre);
   }
@@ -37,7 +37,7 @@ export class ShowController {
     @Query('page') page: number,
     @Query('per-page') perPage: number,
     @Query('order') order: 'DESC' | 'ASC',
-    @Query('genre') genre?: string[],
+    @Query('genre') genre?: string[] | string,
   ) {
     return this.showService.getMostViewedShow(perPage, page, order, genre);
   }
@@ -47,7 +47,7 @@ export class ShowController {
     @Query('page') page: number,
     @Query('per-page') perPage: number,
     @Query('order') order: 'DESC' | 'ASC',
-    @Query('genre') genre?: string[],
+    @Query('genre') genre?: string[] | string,
   ) {
     return this.showService.getHighestRatedShow(perPage, page, order, genre);
   }

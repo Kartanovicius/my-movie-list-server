@@ -34,7 +34,7 @@ export class ShowEntity extends Base {
     array: true,
     default: [],
   })
-  genre: string[];
+  genre: string[] | string;
 
   @Column({ default: '', name: 'poster_path' })
   posterPath: string;
