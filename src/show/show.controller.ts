@@ -52,7 +52,7 @@ export class ShowController {
     return this.showService.getHighestRatedShow(perPage, page, order, genre);
   }
 
-  @Get('by-id:id')
+  @Get('by-id/:id')
   async getShowById(@Param('id') id: string) {
     return this.showService.byId(+id);
   }
